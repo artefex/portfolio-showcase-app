@@ -108,3 +108,52 @@ Final safety scan:
   `langchain-tavily` package in a future dependency maintenance pass.
 - Decide whether to add an open-source license after confirming ownership and
   reuse permissions.
+
+## Final Portfolio Polish Pass
+
+- README reviewer quick path added, including the graph topology, node logic,
+  service boundaries, backend tests, SSE client, UI components, and this
+  sanitization audit trail.
+- Backend packaging metadata was tightened with an explicit Hatchling wheel file
+  selection so `pip install -e ".[dev]"` works for CI and reviewer setup.
+- Docker healthcheck was reviewed and left unchanged. `docker-compose.yml` uses
+  `curl -f http://localhost:8000/health`, and `backend/Dockerfile` already
+  installs `curl`.
+- GitHub Actions CI was added in `.github/workflows/ci.yml` with separate backend
+  and frontend jobs for install, tests, lint/typecheck, and build checks.
+- Screenshots were rechecked during the final portfolio polish pass and no
+  client-identifying or secret material was found.
+
+Verification commands run:
+
+| Command | Result | Notes |
+| --- | --- | --- |
+| `python -m pip install -e ".[dev]"` in `backend/` | Not run locally | This machine does not have a `python` executable on PATH; CI provides it via `actions/setup-python`. |
+| `python3 -m pip install -e ".[dev]"` in `backend/` | Passed after packaging metadata fix | Initial run exposed the missing Hatchling file-selection metadata; rerun passed after adding it. |
+| `python3 -m pytest tests -v` in `backend/` | Passed | 41 tests passed. Warnings: Python 3.14/Pydantic V1 compatibility warning from LangChain, and `TavilySearchResults` deprecation warning from LangChain. |
+| `npm ci` in `frontend/` | Passed | npm reported 10 transitive audit vulnerabilities. No automated audit fix was applied to avoid broad dependency churn. |
+| `npm run lint` in `frontend/` | Passed | ESLint completed cleanly. |
+| `npm run typecheck` in `frontend/` | Passed | TypeScript completed cleanly. |
+| `npm test` in `frontend/` | Passed | 4 test files and 12 tests passed. |
+| `npm run build` in `frontend/` | Passed | Next.js production build completed successfully. |
+| `docker compose config` at repo root | Passed with temporary local env file | `backend/.env` is intentionally ignored; config passed after temporarily copying `backend/.env.example` to `backend/.env`, then removing it. |
+| `docker compose build` at repo root | Not completed | Docker daemon was not running in this desktop session. |
+
+Final safety scan:
+
+- Requested original/client identifier variants: no matches outside this final
+  report entry.
+- Secret/risky term scan produced only expected docs/examples, environment
+  variable names, SSE token terminology, and package privacy metadata. No secret
+  values, private domains, emails, webhook URLs, database URLs, analytics IDs, or
+  credentials were found.
+- File scan found no committed `.env`, `.env.local`, `*.log`, PEM files, or key
+  files outside ignored/generated dependency locations.
+
+Remaining human-review items:
+
+- Run `docker compose build` once Docker Desktop or another Docker daemon is
+  available.
+- Review npm audit output during a future dependency maintenance pass.
+- Decide whether to add an open-source license after confirming ownership and
+  reuse permissions.

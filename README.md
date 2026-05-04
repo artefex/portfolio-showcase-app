@@ -4,6 +4,10 @@ A sanitized public portfolio project that demonstrates a streaming AI recipe
 assistant built with a FastAPI backend, a LangGraph workflow, and a Next.js chat
 frontend.
 
+This repo is intended as a public engineering sample showing how I structure
+AI-assisted product workflows: typed boundaries, streaming UX, testable graph
+nodes, and safe provider-key handling.
+
 This repository contains neutral demo content only. It does not include client
 data, proprietary branding, private domains, analytics IDs, credentials, or
 production deployment targets.
@@ -17,6 +21,18 @@ production deployment targets.
 - Runtime validation with Pydantic and Zod.
 - Testable service boundaries with mock LLM services in the backend tests.
 - Docker Compose setup for local full-stack development.
+
+## Reviewer Quick Path
+
+For a fast review of the strongest engineering surfaces:
+
+1. `backend/graphs/recipe_graph.py` — LangGraph workflow topology.
+2. `backend/nodes/` — testable graph node logic.
+3. `backend/services/` — provider-backed vs mock service boundaries.
+4. `backend/tests/` — backend coverage around graph behavior.
+5. `frontend/lib/api.ts` — streaming SSE client.
+6. `frontend/components/` — chat UI and debug state display.
+7. `SANITIZATION_REPORT.md` — privacy/sanitization audit trail.
 
 ## Tech Stack
 
@@ -183,6 +199,10 @@ included.
 Runtime secrets belong in ignored `.env` files or a deployment secret manager.
 The frontend receives only `NEXT_PUBLIC_*` values and never receives provider API
 keys.
+
+Known maintenance note: frontend transitive dependency audit warnings are
+documented in `SANITIZATION_REPORT.md`. They were not auto-fixed during
+sanitization to avoid broad dependency churn in this portfolio version.
 
 ## License
 

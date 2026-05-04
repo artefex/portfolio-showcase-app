@@ -34,6 +34,19 @@ line-length = 100
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W"]
 
+[tool.hatch.build.targets.wheel]
+only-include = [
+    "config.py",
+    "main.py",
+    "graphs",
+    "nodes",
+    "prompts",
+    "schemas",
+    "services",
+    "tools",
+    "utils",
+]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
