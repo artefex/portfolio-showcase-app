@@ -1,5 +1,7 @@
 # Recipe Assistant Showcase
 
+[![CI](https://github.com/artefex/portfolio-showcase-app/actions/workflows/ci.yml/badge.svg)](https://github.com/artefex/portfolio-showcase-app/actions/workflows/ci.yml)
+
 A sanitized public portfolio project that demonstrates a streaming AI recipe
 assistant built with a FastAPI backend, a LangGraph workflow, and a Next.js chat
 frontend.
@@ -32,7 +34,7 @@ For a fast review of the strongest engineering surfaces:
 4. `backend/tests/` — backend coverage around graph behavior.
 5. `frontend/lib/api.ts` — streaming SSE client.
 6. `frontend/components/` — chat UI and debug state display.
-7. `SANITIZATION_REPORT.md` — privacy/sanitization audit trail.
+7. `.github/workflows/ci.yml` — backend/frontend verification pipeline.
 
 ## Tech Stack
 
@@ -200,9 +202,13 @@ Runtime secrets belong in ignored `.env` files or a deployment secret manager.
 The frontend receives only `NEXT_PUBLIC_*` values and never receives provider API
 keys.
 
+A brief sanitization summary is available in
+[`docs/sanitization-report.md`](docs/sanitization-report.md).
+
 Known maintenance note: frontend transitive dependency audit warnings are
-documented in `SANITIZATION_REPORT.md`. They were not auto-fixed during
-sanitization to avoid broad dependency churn in this portfolio version.
+documented in [`docs/sanitization-report.md`](docs/sanitization-report.md). They
+were not auto-fixed during sanitization to avoid broad dependency churn in this
+portfolio version.
 
 ## License
 
