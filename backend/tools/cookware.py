@@ -1,0 +1,12 @@
+# Hardcoded cookware list and lookup utilities
+
+AVAILABLE_COOKWARE = [
+    "Spatula",
+    "Frying Pan",
+    "Little Pot",
+    "Stovetop",
+    "Whisk",
+    "Knife",
+    "Ladle",
+    "Spoon"
+]
